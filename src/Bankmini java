@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+public class BankMini {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        // Membuat satu object Rekening sesuai instruksi gambar
+        Rekening akun = new Rekening("001", "Ani", 100000);
+
+        System.out.println("============ BANK MINI ============");
+        System.out.println("Rekening 001 a.n. Ani");
+
+        int menu = -1;
+
+        // Perulangan sampai diketik angka 0
+        while (menu != 0) {
+            System.out.print("Menu (1 setor, 2 tarik, 3 info, 0 keluar): ");
+            
+            // Validasi jika input bukan angka
+            if (!input.hasNextInt()) {
+                System.out.println("Menu tidak dikenal.\n");
+                input.next(); // membuang input yang salah
+                continue;
+            }
+            
+            menu = input.nextInt();
+
+            if (menu == 1) {
+                System.out.print("Jumlah: ");
+                int jumlahSetor = input.nextInt();
+                if (akun.setor(jumlahSetor)) {
+                    System.out.println("  Berhasil");
+                } else {
+                    System.out.println("  Ditolak");
+                }
+            } 
+            else if (menu == 2) {
+                System.out.print("Jumlah: ");
+                int jumlahTarik = input.nextInt();
+                if (akun.tarik(jumlahTarik)) {
+                    System.out.println("  Berhasil");
+                } else {
+                    System.out.println("  Ditolak");
+                }
+            } 
+            else if (menu == 3) {
+                akun.tampilkanInfo();
+            } 
+            else if (menu == 0) {
+                // Keluar dari perulangan
+                break;
+            } 
+            else {
+                System.out.println("Menu tidak dikenal.\n");
+            }
+        }
+
+        // 6. Sesudah keluar dari menu, cetak info rekening sekali lagi sebagai saldo akhir
+        System.out.println("\n========== SALDO AKHIR ==========");
+        akun.tampilkanInfo();
+
+        // 7. Tulis rekening.saldo = 1000000; di main, jalankan, salin pesan error-nya ke komentar
+        // akun.saldo = 1000000; 
+        /* 
+         Pesan Error yang muncul saat baris di atas diaktifkan:
+         ----------------------------------------------------------------------
+         Error: saldo has private access in Rekening
+         ----------------------------------------------------------------------
+         Analisis: Error ini terjadi karena variabel 'saldo' di dalam class 
+         Rekening diberi hak akses 'private'. Akibatnya, variabel tersebut 
+         tidak boleh dimodifikasi ataupun diakses secara langsung dari luar 
+         class Rekening (termasuk dari class BankMini).
+        */
+        
+        input.close();
+    }
+}
